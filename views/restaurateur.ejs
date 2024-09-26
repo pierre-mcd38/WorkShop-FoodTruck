@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commandes Passées</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('header') %>
+
+  <div class="container mt-5">
+    <h2 class="mb-4">Commandes Passées</h2>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Nom</th>
+          <th scope="col">Pain Burger</th>
+          <th scope="col">Pain Sandwich</th>
+          <th scope="col">Steak</th>
+          <th scope="col">Tender</th>
+          <th scope="col">Salade Verte</th>
+          <th scope="col">Tomates</th>
+          <th scope="col">Oignons</th>
+          <th scope="col">Concombres</th>
+          <th scope="col">Olives</th>
+          <th scope="col">Cheddar</th>
+          <th scope="col">Sauce</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (commandes && commandes.length > 0) { %>
+          <% commandes.forEach(commande => { %>
+          <tr>
+            <td><%= commande.nom %></td>
+            <td><%= commande.painBurger ? 'Oui' : 'Non' %></td>
+            <td><%= commande.painSandwich ? 'Oui' : 'Non' %></td>
+            <td><%= commande.steak ? 'Oui' : 'Non' %></td>
+            <td><%= commande.tender ? 'Oui' : 'Non' %></td>
+            <td><%= commande.saladeVerte ? 'Oui' : 'Non' %></td>
+            <td><%= commande.tomates ? 'Oui' : 'Non' %></td>
+            <td><%= commande.oignons ? 'Oui' : 'Non' %></td>
+            <td><%= commande.concombres ? 'Oui' : 'Non' %></td>
+            <td><%= commande.olives ? 'Oui' : 'Non' %></td>
+            <td><%= commande.cheddar ? 'Oui' : 'Non' %></td>
+            <td><%= commande.sauce %></td>
+          </tr>
+          <% }) %>
+        <% } else { %>
+          <tr>
+            <td colspan="12">Aucune commande n'a été trouvée.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <%- include('footer') %>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

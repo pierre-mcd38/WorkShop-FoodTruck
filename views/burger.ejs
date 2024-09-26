@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détails du Burger</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <%- include('header') %> <!-- Inclut l'en-tête de la page -->
+
+    <main class="container mt-4">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="/images/burger.jpg" alt="Burger du chef" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+          <h1>Burger du Chef</h1>
+          <p>Un délicieux burger avec un steak juteux, fromage, salade et sauce.</p>
+
+          <h5>Ingrédients :</h5>
+          <br>
+          <div id="ingredients-list">
+            <!-- Liste des ingrédients avec boutons pour ajuster les quantités -->
+            <div class="ingredient">
+              <span>Pain (graine de sésame)</span>
+              <div>
+                <button class="btn btn-danger btn-sm" onclick="adjustIngredient('Pain', -1)">-</button>
+                <span id="Pain-count">1</span> <!-- Affiche le nombre d'ingrédients -->
+                <button class="btn btn-success btn-sm" onclick="adjustIngredient('Pain', 1)">+</button>
+              </div>
+            </div>
+            <div class="ingredient">
+              <span>Steak</span>
+              <div>
+                <button class="btn btn-danger btn-sm" onclick="adjustIngredient('Steak', -1)">-</button>
+                <span id="Steak-count">1</span>
+                <button class="btn btn-success btn-sm" onclick="adjustIngredient('Steak', 1)">+</button>
+              </div>
+            </div>
+            <div class="ingredient">
+              <span>Cheddar</span>
+              <div>
+                <button class="btn btn-danger btn-sm" onclick="adjustIngredient('Cheddar', -1)">-</button>
+                <span id="Cheddar-count">1</span>
+                <button class="btn btn-success btn-sm" onclick="adjustIngredient('Cheddar', 1)">+</button>
+              </div>
+            </div>
+            <div class="ingredient">
+              <span>Salade</span>
+              <div>
+                <button class="btn btn-danger btn-sm" onclick="adjustIngredient('Salade', -1)">-</button>
+                <span id="Salade-count">1</span>
+                <button class="btn btn-success btn-sm" onclick="adjustIngredient('Salade', 1)">+</button>
+              </div>
+            </div>
+            <div class="ingredient">
+              <span>Tomates</span>
+              <div>
+                <button class="btn btn-danger btn-sm" onclick="adjustIngredient('Tomates', -1)">-</button>
+                <span id="Tomates-count">1</span>
+                <button class="btn btn-success btn-sm" onclick="adjustIngredient('Tomates', 1)">+</button>
+              </div>
+            </div>
+            <div class="ingredient">
+              <span>Oignons</span>
+              <div>
+                <button class="btn btn-danger btn-sm" onclick="adjustIngredient('Oignons', -1)">-</button>
+                <span id="Oignons-count">1</span>
+                <button class="btn btn-success btn-sm" onclick="adjustIngredient('Oignons', 1)">+</button>
+              </div>
+            </div>
+          </div>
+          <br>
+
+          <h5>Sauce :</h5>
+          <!-- Champ de sélection pour choisir la sauce -->
+          <select name="sauce" class="form-control mb-3" required>
+            <option value=""></option>
+            <option value="ketchup">Ketchup</option>
+            <option value="mayonnaise">Mayonnaise</option>
+            <option value="moutarde">Moutarde</option>
+            <option value="algerienne">Sauce Algérienne</option>
+            <option value="biggyBurger">Biggy Burger</option>
+            <option value="barbecue">Sauce Barbecue</option>
+            <option value="barbecue">Sauce Andalouse</option>
+          </select>
+
+          <p>Prix : <strong id="price">7.50 €</strong></p>
+
+          <!-- Formulaire pour envoyer la commande -->
+          <form action="/commande/ajouter-commande" method="POST">
+            <!-- Champs cachés pour les ingrédients -->
+            <input type="hidden" name="nom" value="Burger du chef"> <!-- Nom du produit -->
+            <input type="hidden" name="Pain" value="1" id="hiddenPain">
+            <input type="hidden" name="Steak" value="1" id="hiddenSteak">
+            <input type="hidden" name="Cheddar" value="1" id="hiddenCheddar">
+            <input type="hidden" name="Salade" value="1" id="hiddenSalade">
+            <input type="hidden" name="Tomates" value="1" id="hiddenTomates">
+            <input type="hidden" name="Oignons" value="1" id="hiddenOignons">
+            <input type="hidden" name="quantite" value="1" id="quantite">
+            <input type="hidden" name="sauce" id="hiddenSauce"> <!-- Champ caché pour la sauce -->
+
+            <button type="submit" class="btn btn-primary">Commander</button>
+            <!-- Bouton pour soumettre le formulaire -->
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <%- include('footer') %> <!-- Inclut le pied de page -->
+
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+        // Fonction pour ajuster le nombre d'ingrédients
+        function adjustIngredient(ingredient, delta) {
+          const countElement = document.getElementById(`${ingredient}-count`); // Récupère l'élément qui affiche le compte
+          let currentCount = parseInt(countElement.textContent); // Convertit le texte en nombre
+          currentCount += delta; // Ajuste le compte en fonction de delta
+
+          // Limiter les valeurs à 0 ou 1
+          currentCount = Math.max(0, Math.min(1, currentCount));
+          countElement.textContent = currentCount; // Met à jour l'affichage
+
+          // Met à jour la valeur de l'input caché correspondant
+          document.getElementById(`hidden${ingredient}`).value = currentCount;
+        }
+
+        // Événement pour mettre à jour le champ caché pour la sauce lors de la sélection
+        const sauceSelect = document.querySelector('select[name="sauce"]');
+        sauceSelect.addEventListener('change', function () {
+          document.getElementById('hiddenSauce').value = this.value; // Met à jour le champ caché avec la valeur sélectionnée
+        });
+      </script>
+</body>
+
+</html>

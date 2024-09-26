@@ -1,0 +1,39 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Karma", sans-serif;
+}
+
+.sidebar .menu-item {
+  padding: 20px;
+}
+
+.main-content {
+  margin-top: 100px;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: black;
+  border-color: black;
+}
+
+.footer-section {
+  padding: 20px;
+}
+
+.ingredient {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Alignement des éléments */
+  margin-bottom: 15px;
+}
+
+.ingredient button {
+  width: 30px;
+  /* Largeur des boutons */
+}
